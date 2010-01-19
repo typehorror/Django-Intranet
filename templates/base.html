@@ -1,0 +1,421 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Fulham Co Inc.</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="{{STATIC_URL}}css/default.css" rel="stylesheet" type="text/css" media="all" />
+<style type="text/css">
+@import "{{STATIC_URL}}css/layout.css";
+@import "{{STATIC_URL}}css/custom.css";
+
+</style>
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.4.min.js"></script>
+
+<!--script type="text/javascript" src="{{STATIC_URL}}js/snow.js"></script-->
+
+    <script type="text/javascript">
+    // <!--
+    /*
+     * See: http://blog.dynom.nl/archives/jQuery-simple-unordered-list-filter_20090624_39.html
+     * Got any performance improvement tips? Let me know !
+     */
+
+
+    var My = {} 
+    My.List = {
+        Filter : function (inputSelector, listSelector) {
+
+            // Sanity check  
+            var inp, rgx = new RegExp(), titles = $(listSelector), keys;
+            if (titles.length === 0) {
+                return false;
+            }
+
+            // The list with keys to skip (esc, arrows, return, etc)
+            // 8 is backspace, you might want to remove that for better usability
+            keys = [ 13, 27, 32, 37, 38, 39, 40 ];
+
+            // binding keyup to the unordered list
+            $(inputSelector).bind('keyup', function (e) {
+                if (jQuery.inArray(e.keyCode, keys) >= 0) {
+                    return false;
+                }
+
+                // Building the regex from our user input, 'inp' should be escaped
+                inp = $(this).attr('value');
+                try {
+                    rgx.compile(inp, 'im');
+                    /*
+                    titles.each(function () {
+                        if (rgx.source !== '' && !rgx.test($(this).html())) {
+                            $(this).parent('li').hide();
+                        } else {
+                            $(this).parent('li').show();    
+                        }
+                    });
+                    */
+
+                    // a MUCH faster implementation, thanks to Boy Baukema
+                    for (var i=0; i < titles.length; i++) {
+                        if (rgx.source !== '' && !rgx.test(titles[i].innerHTML)) {
+                            titles[i].parentNode.style.display = 'none';
+                        } else {
+                            titles[i].parentNode.style.display = '';
+                        }
+                    }
+                // Silently ignore possible bad regex
+                } catch(e) {}
+            });
+        }
+    };
+
+    // When the DOM is ready
+    $(document).ready(function () {
+        // Attach the filter to our input and list
+        My.List.Filter('input#id_ext_filter', '#ext_list>ul>li>a');
+                // next line launch the snow animation 
+                // initsnow();
+
+        $("#more-headlines h3 a").click(function(){ 
+          $(this).parents('li').find('div.hidden_article').slideToggle(); 
+          return false; 
+          });
+
+    });
+
+
+    /* jslint bitwise: true, browser: true, eqeqeq: true, immed: true, newcap: true, nomen: true, onevar: true, regexp: true, undef: true, white: true, indent: 4 */
+    // -->
+
+
+
+    </script>
+
+
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-5344271-2");
+pageTracker._trackPageview();
+</script>
+
+</head>
+<body>
+<div id="header" class="container">
+    <div id="logo">
+        <h1><a href="homepage_html">Fulham Pro Products Intranet</a></h1>
+
+    </div>
+    <div id="search">
+        <form method="get" action="/orgboard/presentation/search_check_html">
+            <fieldset>
+            <input type="hidden" name="check_ORG" value="1" />
+            <input type="hidden" name="check_CONTACT" value="1" />
+            <input type="hidden" name="check_POST" value="1" />
+            <input type="hidden" name="check_STATISTIC" value="1" />
+            <input type="hidden" name="check_CHECKSHEET" value="1" />
+
+            <input type="hidden" name="check_POLICY" value="1" />
+            <input type="hidden" name="check_NEWS" value="1" />
+            <input id="search-input-text" type="text" name="QUICK_SEARCH" value="" class="input-text" />
+            <input id="search-input-submit" type="image" name="search-input-submit" src="images/homepage03.gif" />
+            </fieldset>
+        </form>
+    </div>
+</div>
+<div id="topmenu" class="container">
+    <div id="today">
+
+        <p>{% now "l, F d, Y" %}</p>
+    </div>
+    <div id="login">
+        <p><span>Welcome {{ user.first_name }} {{ user.last_name }}. Your are logged in.</span></p>
+    </div>
+</div>
+<div id="menu" class="container">
+    <ul>
+        <li class="first"><a href="/orgboard/presentation/person_html">My Page</a></li>
+
+        <li><a href="/orgboard/presentation/orgboard_html?ORG_TABLE=2">A-OK</a></li>
+        <li><a href="/orgboard/presentation/orgboard_html?ORG_TABLE=3">Fulham</a></li>
+        <li><a href="/orgboard/presentation/orgboard_html?ORG_TABLE=1">Wald</a></li>
+        <li><a href="/orgboard/presentation/orgboard_html?ORG_TABLE=4">Retrotek</a></li>
+        <li><a href="/orgboard/presentation/policy_html?ORG_LAYER=0&ORG_TABLE=2">Policies</a></li>
+    </ul>
+
+</div>
+<div id="page" class="container three-columns">
+            <div class="column1">
+        <div class="box-style1">
+            <h2>Communication</h2>
+            <ul>
+                <li><a href="/orgboard/presentation/all_people_html">People</a></li>
+                <li class="alt"><a href="fulhamchina.htm">People China</a></li>
+
+                <li><a href="mailto:report@fulham.com;%20pjohann@fulham.com">Report</a></li>
+            </ul>
+        </div>
+        <div class="box-style1">
+            <h2>Tools</h2>
+            <ul>
+                <li><a href="/orgboard/command/search_COMMAND_OWNER_html">My Instructions</a></li>
+
+                <li class="alt"><a href="/orgboard/command/search_COMMAND_CONTACT_html">My Task</a></li>
+                <li><a href="/orgboard/easyrouting/search_EASYROUTING_OWNER_html">My Route</a></li>
+                <li class="alt"><a href="orgboard/route/search_ROUTES_html">Route List</a></li>
+                <li><a href="/orgboard/index_html">Administration</a></li>
+                <li class="alt"><a href="/orgboard/webfolder/view_files_ro_html?USERFOLDER=/public/&ORGFOLDER=">Download Routing forms</a></li>
+                <li><a href="/orgboard/webfolder/view_files_ro_html?USERFOLDER=/public/&ORGFOLDER=Conditions&POST_ID=0">Conditions</a></li>
+
+                <li class="alt"><a href="http://intern.hq.fulham.com/FulhamCatalog_04.pdf">Fulham Catalog</a></li>
+                <li><a href="http://www.dictionary.com/">Online Dictionary</a></li>
+                <li class="alt"><a href="deftech.htm">Tech. Definitions</a></li>
+                <li><a href="http://maps.google.com/">Maps/Directions</a></li>
+                <li class="alt"><a href="http://www.sigalert.com/map.asp?Region=Greater+Los+Angeles&partner=coxoc">L.A. Traffic</a></li>
+            </ul>
+
+        </div>
+        <div class="box-style1">
+            <h2>Links</h2>
+            <ul>
+                <li><a href="http://www.fulham.com">Fulham</a></li>
+                <li class="alt"><a href="http://fulham-china.com">Fulham China</a></li>
+                <li><a href="http://walddiversified.com">Wald</a></li>
+
+                <li class="alt"><a href="http://professional-products.com">Pro Products</a></li>
+                <li><a href="http://www.esto-ware.com">esto.ware</a></li>
+                <li class="alt"><a href="http://216.75.30.243:8080/index.html">esto.ware intern</a></li>
+                <li><a href="http://www.asianartsint.com/">Asian Arts</a></li>
+                <li class="alt"><a href="http://www.google.com">Google</a></li>
+                <li><a href="http://intern.hq.fulham.com/englinks.htm">Eng. Links</a></li>
+
+            </ul>
+        </div>
+        <div class="box-style1">
+            <h2>Results</h2>
+            <ul>
+                <li><a href="/orgboard/presentation/oic_html?ORG_TABLE=2">Statistics CSU</a></li>
+                <li class="alt"><a href="/orgboard/presentation/oic_html?ORG_TABLE=3">Statistics FH</a></li>
+
+                <li><a href="/orgboard/presentation/oic_html?ORG_TABLE=1">Statistics Wald</a></li>
+                <li class="alt"><a href="http://www.fulham.com/downloads/webalizer/">fh.com stat</a></li>
+                <li><a href="http://intern.hq.fulham.com/success.htm">Success</a></li>
+
+            </ul>
+        </div>
+        <div class="box-style1">
+            <h2>Special References</h2>
+
+            <ul>
+                <li><a href="http://www.fulham.com:8080/public/Exchange.pdf">Exchange</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="column2">
+        <div class="box-style3">
+                        <div class="title">
+
+                <h2><span class="title_date">Jan 14, 2010 8:33 am</span>Top Story</h2>
+            </div>
+            <div class="content">
+
+                <h3 class="style1">Pamela Stowers</h3>
+                <p><!--[if gte mso 9]><xml>  <w:WordDocument>   <w:View>Normal</w:View>   <w:Zoom>0</w:Zoom>   <w:PunctuationKerning/>   <w:ValidateAgainstSchemas/>   <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>   <w:IgnoreMixedContent>false</w:IgnoreMixedContent>   <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>   <w:Compatibility>    <w:BreakWrappedTables/>    <w:SnapToGridInCell/>    <w:WrapTextWithPunct/>    <w:UseAsianBreakRules/>    <w:DontGrowAutofit/>   </w:Compatibility>   <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>  </w:WordDocument> </xml><![endif]--><!--[if gte mso 9]><xml>  <w:LatentStyles DefLockedState="false" LatentStyleCount="156">  </w:LatentStyles> </xml><![endif]--><!--[if !mso]><div   classid="clsid:38481807-CA0E-42D2-BF39-B33AF135CC4D" id=ieooui></div> <style> st1\:*{behavior:url(#ieooui) } </style> <![endif]--> <!--  /* Style Definitions */  p.MsoNormal, li.MsoNormal, div.MsoNormal    {mso-style-parent:"";   margin:0in;     margin-bottom:.0001pt;  mso-pagination:widow-orphan;    font-size:12.0pt;   font-family:"Times New Roman";  mso-fareast-font-family:"Times New Roman";} @page Section1  {size:8.5in 11.0in;     margin:1.0in 1.25in 1.0in 1.25in;   mso-header-margin:.5in;     mso-footer-margin:.5in;     mso-paper-source:0;} div.Section1   {page:Section1;} --> <!--[if gte mso 10]> <style>  /* Style Definitions */  table.MsoNormalTable    {mso-style-name:"Table Normal";     mso-tstyle-rowband-size:0;  mso-tstyle-colband-size:0;  mso-style-noshow:yes;   mso-style-parent:"";    mso-padding-alt:0in 5.4pt 0in 5.4pt;    mso-para-margin:0in;    mso-para-margin-bottom:.0001pt;     mso-pagination:widow-orphan;    font-size:10.0pt;   font-family:"Times New Roman";  mso-ansi-language:#0400;    mso-fareast-language:#0400;     mso-bidi-language:#0400;} </style> <![endif]-->    <p class="MsoNormal">Fulham Co, announces that Pamela Stowers will take the position of Marketing Communications Manager.<span>&nbsp; </span>Fulham has identified the need for a full time marketing person to coordinate and execute trade shows, the website, catalogs and literature as well as advertising and promotions.<span>&nbsp; </span>As Marketing Communications Manager, she will also be responsible for the handling of Fulham&rsquo;s promotional and instructional video program.<span>&nbsp; </span>Most importantly, Pamela will provide support to Product and Channel Managers as well as Sales with polished marketing tools.<span>&nbsp; </span>She will spend the next couple of weeks meeting with Managers to review programs and identify high priority marketing needs. </p>    <p class="MsoNormal">Pamela has 12 years of Marketing Communications experience, of which 8 years are in the lighting industry. </p>    <p class="MsoNormal">Pamela previously held the position of Lamp and LED Product Manager at Fulham.<span>&nbsp; </span>The Product Management duties will be assumed by a yet unidentified individual. In the interim, Brian Wald will handle questions and issues concerning LEDs. </p>  <p class="MsoNormal">Please congratulate Pamela on her new position and watch for the exciting new Marketing tools to come.</p>  </p>
+
+            </div>
+                    </div>
+        <div id="more-headlines" class="box-style3">
+            <div class="title">
+                <h2>More Headlines</h2>
+            </div>
+            <div class="content">
+                <ul class="list2">
+
+                                        <li class="first">                      <h3><span class="title_date">Jan 14, 2010 8:26 am</span><a href="#">Peter Johann</a></h3>
+                        <div class="hidden_article"><p>Peter Johann is no longer part of the Fulham/Wald group.&nbsp; For now, any questions, concerns or issues that would normally have gone directly to Peter should be referred to Matt Barnes.&nbsp; Peter will still be connected with us as the manager of Estoware, which will continue to serve as our company information and organizational system.&nbsp; He can be contacted at pjohann@esto-ware.com and will still visit once in a while on esto-ware business.&nbsp; We thank Peter for his work here and wish him the very best in all his future endeavors.</p></div>
+                        </li>
+
+                                        <li>                        <h3><span class="title_date">Jan 5, 2010 3:43 pm</span><a href="#">Fulham Inventory - Thank you!</a></h3>
+                        <div class="hidden_article"><p><p>&nbsp;</p><div style="text-align: center"><img src="/newsfolder/news624/warehouse.jpg" border="0" alt="warehouse.jpg" title="warehouse.jpg" width="371" height="278" /></div><p>&nbsp;</p><p align="justify">Thank you to all employees who helped make our 2009 year-end physical inventory a success.&nbsp; A very big thank you and special acknowledgement go to Fouad Nawaz for all of his hard work preparing for, organizing, and handling the responsibility for the inventory count.&nbsp; Fouad reported that our count was an astounding 99.91% accurate!&nbsp; By far the most accurate inventory count for Fulham in recent memory.&nbsp; Much of that success is also due to the work of Ray and the warehouse crew, Alex Ponce, Dan Rhoden, and Leon White.&nbsp; We always strive to improve year to year, and 2009 was no exception.&nbsp; Here is to an even better 2010!</p></p></div>
+
+                        </li>
+                                        <li>                        <h3><span class="title_date">Dec 22, 2009 11:56 am</span><a href="#">Holiday Happenings</a></h3>
+                        <div class="hidden_article"><p><p>&nbsp;</p><div style="text-align: center"><img src="/newsfolder/news623/happyHolidays09.jpg" border="0" alt="happyHolidays09.jpg" title="happyHolidays09.jpg" width="300" height="205" /></div><p>&nbsp;</p><p>So much is going on around the office this Holiday, we decided to put all the news up at once!</p><p align="center"><font color="#ff0000"><strong>Holiday Calendar</strong></font></p><p align="left">In case you didn&#39;t know, Fulham and Wald are closed Christmas Eve &amp; Christmas Day (Dec. 24 &amp; 25). And for next week, closed on New Year&#39;s Eve and New Year&#39;s Day (Dec. 31 &amp; Jan. 1). &nbsp; </p><p align="center"><font color="#008000"><strong>Wald Inventory/Fulham Inventory</strong></font></p><p align="left">Wald&#39;s Inventory was completed in new record time last week.&nbsp; Each year, it gets faster, easier, more accurate.&nbsp; This is due largely to the efforts of our Purchasing Manager, Crystal Wilhite, and our warehouse manager, Andres Hernandez.&nbsp; Andres and the whole warehouse crew made sure that an extensive and accurate pre-count left only small items for the rest of the office to inventory, and Laura was able to input the information and verify our numbers well before 4pm.&nbsp; Thank you to everyone for chipping in!</p><p align="left">Now it is Fulham&#39;s turn to raise the bar.&nbsp; Fulham inventory is scheduled for Monday Jan. 4th. Arrive at 8am, and dress warmly.&nbsp; Jeans and closed-toe shoes are the order of the day. Lunch and breakfast provided.&nbsp;&nbsp; </p><p align="center"><strong><font color="#ff0000">Cookie exchange a sweet success!</font></strong></p><p align="left">Thanks to Crystal and Tracy for organizing our holiday cookie exchange . . . and to all the participating bakery chefs.&nbsp; We didn&#39;t know how talented you all are in the kitchen (or was it the bakery isle at Ralphs?)! </p><p align="center"><strong><font color="#008000">The Spirit of Giving</font></strong></p><p align="left">As the holidays draw close, we want to thank everyone for lending a hand to those in need.&nbsp; From Dhalia&#39;s canned food drive for the Long Beach Rescue Mission to Mark&#39;s clothing drive for homeless kids in Long Beach.&nbsp; There is still time to donate!&nbsp; Visit Dhalia with food or Mark with clothes and See more at <a href="http://lbrm.org/" target="_blank">http://lbrm.org/</a> <font size="2"> and </font><a href="http://www.standupforkids.org/local/california/Long%20Beach/" title="http://www.standupforkids.org/local/california/Long%20Beach/">http://www.standupforkids.org/local/california/Long%20Beach/</a> </p><p align="center"><strong><font color="#0000ff">And Finally . . .</font></strong></p><p align="left">&nbsp;</p><div style="text-align: center"><img src="/newsfolder/news623/luis%20baby.bmp" border="0" alt="luis baby.bmp" title="luis baby.bmp" width="240" height="320" /></div><p>&nbsp;</p><p align="left">We have a new addition to the Fulham/Wald family.&nbsp; Luis Ramirez is the proud papa of a healthy, 9lb 8oz baby boy!&nbsp; Congratulations! &nbsp; </p><p align="center"><strong><font color="#ff0000">Wishing everyone a memorable Holiday season!</font></strong> </p></p></div>
+
+                        </li>
+                                        <li>                        <h3><span class="title_date">Dec 15, 2009 9:29 am</span><a href="#">FULHAM Year End Inventory</a></h3>
+                        <div class="hidden_article"><p><!--[if gte mso 9]><xml>  <w:WordDocument>   <w:View>Normal</w:View>   <w:Zoom>0</w:Zoom>   <w:TrackMoves/>   <w:TrackFormatting/>   <w:PunctuationKerning/>   <w:ValidateAgainstSchemas/>   <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>   <w:IgnoreMixedContent>false</w:IgnoreMixedContent>   <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>   <w:DoNotPromoteQF/>   <w:LidThemeOther>EN-US</w:LidThemeOther>   <w:LidThemeAsian>X-NONE</w:LidThemeAsian>   <w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>   <w:Compatibility>    <w:BreakWrappedTables/>    <w:SnapToGridInCell/>    <w:WrapTextWithPunct/>    <w:UseAsianBreakRules/>    <w:DontGrowAutofit/>    <w:SplitPgBreakAndParaMark/>    <w:DontVertAlignCellWithSp/>    <w:DontBreakConstrainedForcedTables/>    <w:DontVertAlignInTxbx/>    <w:Word11KerningPairs/>    <w:CachedColBalance/>   </w:Compatibility>   <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>   <m:mathPr>    <m:mathFont m:val="Cambria Math"/>    <m:brkBin m:val="before"/>    <m:brkBinSub m:val="&#45;-"/>    <m:smallFrac m:val="off"/>    <m:dispDef/>    <m:lMargin m:val="0"/>    <m:rMargin m:val="0"/>    <m:defJc m:val="centerGroup"/>    <m:wrapIndent m:val="1440"/>    <m:intLim m:val="subSup"/>    <m:naryLim m:val="undOvr"/>   </m:mathPr></w:WordDocument> </xml><![endif]--><!--[if gte mso 9]><xml>  <w:LatentStyles DefLockedState="false" DefUnhideWhenUsed="true"   DefSemiHidden="true" DefQFormat="false" DefPriority="99"   LatentStyleCount="267">   <w:LsdException Locked="false" Priority="0" SemiHidden="false"    UnhideWhenUsed="false" QFormat="true" Name="Normal"/>   <w:LsdException Locked="false" Priority="9" SemiHidden="false"    UnhideWhenUsed="false" QFormat="true" Name="heading 1"/>   <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 2"/>   <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 3"/>   <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 4"/>   <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 5"/>   <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 6"/>   <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 7"/>   <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 8"/>   <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 9"/>   <w:LsdException Locked="false" Priority="39" Name="toc 1"/>   <w:LsdException Locked="false" Priority="39" Name="toc 2"/>   <w:LsdException Locked="false" Priority="39" Name="toc 3"/>   <w:LsdException Locked="false" Priority="39" Name="toc 4"/>   <w:LsdException Locked="false" Priority="39" Name="toc 5"/>   <w:LsdException Locked="false" Priority="39" Name="toc 6"/>   <w:LsdException Locked="false" Priority="39" Name="toc 7"/>   <w:LsdException Locked="false" Priority="39" Name="toc 8"/>   <w:LsdException Locked="false" Priority="39" Name="toc 9"/>   <w:LsdException Locked="false" Priority="35" QFormat="true" Name="caption"/>   <w:LsdException Locked="false" Priority="10" SemiHidden="false"    UnhideWhenUsed="false" QFormat="true" Name="Title"/>   <w:LsdException Locked="false" Priority="1" Name="Default Paragraph Font"/>   <w:LsdException Locked="false" Priority="11" SemiHidden="false"    UnhideWhenUsed="false" QFormat="true" Name="Subtitle"/>   <w:LsdException Locked="false" Priority="22" SemiHidden="false"    UnhideWhenUsed="false" QFormat="true" Name="Strong"/>   <w:LsdException Locked="false" Priority="20" SemiHidden="false"    UnhideWhenUsed="false" QFormat="true" Name="Emphasis"/>   <w:LsdException Locked="false" Priority="59" SemiHidden="false"    UnhideWhenUsed="false" Name="Table Grid"/>   <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Placeholder Text"/>   <w:LsdException Locked="false" Priority="1" SemiHidden="false"    UnhideWhenUsed="false" QFormat="true" Name="No Spacing"/>   <w:LsdException Locked="false" Priority="60" SemiHidden="false"    UnhideWhenUsed="false" Name="Light Shading"/>   <w:LsdException Locked="false" Priority="61" SemiHidden="false"    UnhideWhenUsed="false" Name="Light List"/>   <w:LsdException Locked="false" Priority="62" SemiHidden="false"    UnhideWhenUsed="false" Name="Light Grid"/>   <w:LsdException Locked="false" Priority="63" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Shading 1"/>   <w:LsdException Locked="false" Priority="64" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Shading 2"/>   <w:LsdException Locked="false" Priority="65" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium List 1"/>   <w:LsdException Locked="false" Priority="66" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium List 2"/>   <w:LsdException Locked="false" Priority="67" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 1"/>   <w:LsdException Locked="false" Priority="68" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 2"/>   <w:LsdException Locked="false" Priority="69" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 3"/>   <w:LsdException Locked="false" Priority="70" SemiHidden="false"    UnhideWhenUsed="false" Name="Dark List"/>   <w:LsdException Locked="false" Priority="71" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful Shading"/>   <w:LsdException Locked="false" Priority="72" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful List"/>   <w:LsdException Locked="false" Priority="73" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful Grid"/>   <w:LsdException Locked="false" Priority="60" SemiHidden="false"    UnhideWhenUsed="false" Name="Light Shading Accent 1"/>   <w:LsdException Locked="false" Priority="61" SemiHidden="false"    UnhideWhenUsed="false" Name="Light List Accent 1"/>   <w:LsdException Locked="false" Priority="62" SemiHidden="false"    UnhideWhenUsed="false" Name="Light Grid Accent 1"/>   <w:LsdException Locked="false" Priority="63" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Shading 1 Accent 1"/>   <w:LsdException Locked="false" Priority="64" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Shading 2 Accent 1"/>   <w:LsdException Locked="false" Priority="65" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium List 1 Accent 1"/>   <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Revision"/>   <w:LsdException Locked="false" Priority="34" SemiHidden="false"    UnhideWhenUsed="false" QFormat="true" Name="List Paragraph"/>   <w:LsdException Locked="false" Priority="29" SemiHidden="false"    UnhideWhenUsed="false" QFormat="true" Name="Quote"/>   <w:LsdException Locked="false" Priority="30" SemiHidden="false"    UnhideWhenUsed="false" QFormat="true" Name="Intense Quote"/>   <w:LsdException Locked="false" Priority="66" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium List 2 Accent 1"/>   <w:LsdException Locked="false" Priority="67" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 1 Accent 1"/>   <w:LsdException Locked="false" Priority="68" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 2 Accent 1"/>   <w:LsdException Locked="false" Priority="69" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 3 Accent 1"/>   <w:LsdException Locked="false" Priority="70" SemiHidden="false"    UnhideWhenUsed="false" Name="Dark List Accent 1"/>   <w:LsdException Locked="false" Priority="71" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful Shading Accent 1"/>   <w:LsdException Locked="false" Priority="72" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful List Accent 1"/>   <w:LsdException Locked="false" Priority="73" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful Grid Accent 1"/>   <w:LsdException Locked="false" Priority="60" SemiHidden="false"    UnhideWhenUsed="false" Name="Light Shading Accent 2"/>   <w:LsdException Locked="false" Priority="61" SemiHidden="false"    UnhideWhenUsed="false" Name="Light List Accent 2"/>   <w:LsdException Locked="false" Priority="62" SemiHidden="false"    UnhideWhenUsed="false" Name="Light Grid Accent 2"/>   <w:LsdException Locked="false" Priority="63" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Shading 1 Accent 2"/>   <w:LsdException Locked="false" Priority="64" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Shading 2 Accent 2"/>   <w:LsdException Locked="false" Priority="65" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium List 1 Accent 2"/>   <w:LsdException Locked="false" Priority="66" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium List 2 Accent 2"/>   <w:LsdException Locked="false" Priority="67" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 1 Accent 2"/>   <w:LsdException Locked="false" Priority="68" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 2 Accent 2"/>   <w:LsdException Locked="false" Priority="69" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 3 Accent 2"/>   <w:LsdException Locked="false" Priority="70" SemiHidden="false"    UnhideWhenUsed="false" Name="Dark List Accent 2"/>   <w:LsdException Locked="false" Priority="71" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful Shading Accent 2"/>   <w:LsdException Locked="false" Priority="72" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful List Accent 2"/>   <w:LsdException Locked="false" Priority="73" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful Grid Accent 2"/>   <w:LsdException Locked="false" Priority="60" SemiHidden="false"    UnhideWhenUsed="false" Name="Light Shading Accent 3"/>   <w:LsdException Locked="false" Priority="61" SemiHidden="false"    UnhideWhenUsed="false" Name="Light List Accent 3"/>   <w:LsdException Locked="false" Priority="62" SemiHidden="false"    UnhideWhenUsed="false" Name="Light Grid Accent 3"/>   <w:LsdException Locked="false" Priority="63" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Shading 1 Accent 3"/>   <w:LsdException Locked="false" Priority="64" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Shading 2 Accent 3"/>   <w:LsdException Locked="false" Priority="65" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium List 1 Accent 3"/>   <w:LsdException Locked="false" Priority="66" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium List 2 Accent 3"/>   <w:LsdException Locked="false" Priority="67" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 1 Accent 3"/>   <w:LsdException Locked="false" Priority="68" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 2 Accent 3"/>   <w:LsdException Locked="false" Priority="69" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 3 Accent 3"/>   <w:LsdException Locked="false" Priority="70" SemiHidden="false"    UnhideWhenUsed="false" Name="Dark List Accent 3"/>   <w:LsdException Locked="false" Priority="71" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful Shading Accent 3"/>   <w:LsdException Locked="false" Priority="72" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful List Accent 3"/>   <w:LsdException Locked="false" Priority="73" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful Grid Accent 3"/>   <w:LsdException Locked="false" Priority="60" SemiHidden="false"    UnhideWhenUsed="false" Name="Light Shading Accent 4"/>   <w:LsdException Locked="false" Priority="61" SemiHidden="false"    UnhideWhenUsed="false" Name="Light List Accent 4"/>   <w:LsdException Locked="false" Priority="62" SemiHidden="false"    UnhideWhenUsed="false" Name="Light Grid Accent 4"/>   <w:LsdException Locked="false" Priority="63" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Shading 1 Accent 4"/>   <w:LsdException Locked="false" Priority="64" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Shading 2 Accent 4"/>   <w:LsdException Locked="false" Priority="65" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium List 1 Accent 4"/>   <w:LsdException Locked="false" Priority="66" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium List 2 Accent 4"/>   <w:LsdException Locked="false" Priority="67" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 1 Accent 4"/>   <w:LsdException Locked="false" Priority="68" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 2 Accent 4"/>   <w:LsdException Locked="false" Priority="69" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 3 Accent 4"/>   <w:LsdException Locked="false" Priority="70" SemiHidden="false"    UnhideWhenUsed="false" Name="Dark List Accent 4"/>   <w:LsdException Locked="false" Priority="71" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful Shading Accent 4"/>   <w:LsdException Locked="false" Priority="72" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful List Accent 4"/>   <w:LsdException Locked="false" Priority="73" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful Grid Accent 4"/>   <w:LsdException Locked="false" Priority="60" SemiHidden="false"    UnhideWhenUsed="false" Name="Light Shading Accent 5"/>   <w:LsdException Locked="false" Priority="61" SemiHidden="false"    UnhideWhenUsed="false" Name="Light List Accent 5"/>   <w:LsdException Locked="false" Priority="62" SemiHidden="false"    UnhideWhenUsed="false" Name="Light Grid Accent 5"/>   <w:LsdException Locked="false" Priority="63" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Shading 1 Accent 5"/>   <w:LsdException Locked="false" Priority="64" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Shading 2 Accent 5"/>   <w:LsdException Locked="false" Priority="65" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium List 1 Accent 5"/>   <w:LsdException Locked="false" Priority="66" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium List 2 Accent 5"/>   <w:LsdException Locked="false" Priority="67" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 1 Accent 5"/>   <w:LsdException Locked="false" Priority="68" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 2 Accent 5"/>   <w:LsdException Locked="false" Priority="69" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 3 Accent 5"/>   <w:LsdException Locked="false" Priority="70" SemiHidden="false"    UnhideWhenUsed="false" Name="Dark List Accent 5"/>   <w:LsdException Locked="false" Priority="71" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful Shading Accent 5"/>   <w:LsdException Locked="false" Priority="72" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful List Accent 5"/>   <w:LsdException Locked="false" Priority="73" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful Grid Accent 5"/>   <w:LsdException Locked="false" Priority="60" SemiHidden="false"    UnhideWhenUsed="false" Name="Light Shading Accent 6"/>   <w:LsdException Locked="false" Priority="61" SemiHidden="false"    UnhideWhenUsed="false" Name="Light List Accent 6"/>   <w:LsdException Locked="false" Priority="62" SemiHidden="false"    UnhideWhenUsed="false" Name="Light Grid Accent 6"/>   <w:LsdException Locked="false" Priority="63" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Shading 1 Accent 6"/>   <w:LsdException Locked="false" Priority="64" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Shading 2 Accent 6"/>   <w:LsdException Locked="false" Priority="65" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium List 1 Accent 6"/>   <w:LsdException Locked="false" Priority="66" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium List 2 Accent 6"/>   <w:LsdException Locked="false" Priority="67" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 1 Accent 6"/>   <w:LsdException Locked="false" Priority="68" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 2 Accent 6"/>   <w:LsdException Locked="false" Priority="69" SemiHidden="false"    UnhideWhenUsed="false" Name="Medium Grid 3 Accent 6"/>   <w:LsdException Locked="false" Priority="70" SemiHidden="false"    UnhideWhenUsed="false" Name="Dark List Accent 6"/>   <w:LsdException Locked="false" Priority="71" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful Shading Accent 6"/>   <w:LsdException Locked="false" Priority="72" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful List Accent 6"/>   <w:LsdException Locked="false" Priority="73" SemiHidden="false"    UnhideWhenUsed="false" Name="Colorful Grid Accent 6"/>   <w:LsdException Locked="false" Priority="19" SemiHidden="false"    UnhideWhenUsed="false" QFormat="true" Name="Subtle Emphasis"/>   <w:LsdException Locked="false" Priority="21" SemiHidden="false"    UnhideWhenUsed="false" QFormat="true" Name="Intense Emphasis"/>   <w:LsdException Locked="false" Priority="31" SemiHidden="false"    UnhideWhenUsed="false" QFormat="true" Name="Subtle Reference"/>   <w:LsdException Locked="false" Priority="32" SemiHidden="false"    UnhideWhenUsed="false" QFormat="true" Name="Intense Reference"/>   <w:LsdException Locked="false" Priority="33" SemiHidden="false"    UnhideWhenUsed="false" QFormat="true" Name="Book Title"/>   <w:LsdException Locked="false" Priority="37" Name="Bibliography"/>   <w:LsdException Locked="false" Priority="39" QFormat="true" Name="TOC Heading"/>  </w:LatentStyles> </xml><![endif]--> <!--  /* Font Definitions */  @font-face  {font-family:"Cambria Math";    panose-1:2 4 5 3 5 4 6 3 2 4;   mso-font-charset:0;     mso-generic-font-family:roman;  mso-font-pitch:variable;    mso-font-signature:-1610611985 1107304683 0 0 415 0;} @font-face    {font-family:Calibri;   panose-1:2 15 5 2 2 2 4 3 2 4;  mso-font-charset:0;     mso-generic-font-family:swiss;  mso-font-pitch:variable;    mso-font-signature:-520092929 1073786111 9 0 415 0;}  /* Style Definitions */  p.MsoNormal, li.MsoNormal, div.MsoNormal     {mso-style-unhide:no;   mso-style-qformat:yes;  mso-style-parent:"";    margin:0in;     margin-bottom:.0001pt;  mso-pagination:widow-orphan;    font-size:12.0pt;   font-family:"Times New Roman","serif";  mso-fareast-font-family:Calibri;    mso-fareast-theme-font:minor-latin;} .MsoChpDefault     {mso-style-type:export-only;    mso-default-props:yes;  font-size:10.0pt;   mso-ansi-font-size:10.0pt;  mso-bidi-font-size:10.0pt;} @page Section1  {size:8.5in 11.0in;     margin:1.0in 1.0in 1.0in 1.0in;     mso-header-margin:.5in;     mso-footer-margin:.5in;     mso-paper-source:0;} div.Section1   {page:Section1;} --> <!--[if gte mso 10]> <style>  /* Style Definitions */  table.MsoNormalTable    {mso-style-name:"Table Normal";     mso-tstyle-rowband-size:0;  mso-tstyle-colband-size:0;  mso-style-noshow:yes;   mso-style-priority:99;  mso-style-qformat:yes;  mso-style-parent:"";    mso-padding-alt:0in 5.4pt 0in 5.4pt;    mso-para-margin:0in;    mso-para-margin-bottom:.0001pt;     mso-pagination:widow-orphan;    font-size:11.0pt;   font-family:"Calibri","sans-serif";     mso-ascii-font-family:Calibri;  mso-ascii-theme-font:minor-latin;   mso-fareast-font-family:"Times New Roman";  mso-fareast-theme-font:minor-fareast;   mso-hansi-font-family:Calibri;  mso-hansi-theme-font:minor-latin;   mso-bidi-font-family:"Times New Roman";     mso-bidi-theme-font:minor-bidi;} </style> <![endif]-->  <p class="MsoNormal"><font face="arial,helvetica,sans-serif" size="2">Fouad is the Head of the Fulham Inventory Committee. Quote: &ldquo;Year-end inventory date has been finalized, Fulham inventory is scheduled for <strong>Monday, January 4th</strong>. All employees are expected to be present on inventory days - unless there has been a pre-approved absence. Everyone participates in the inventory counts in one way or another. Some people will stay in the office to handle phone calls, but most everyone will be assigned to a counting team. Individual counters will be able to conduct their inventory count and return to the office to work on their jobs, but they may be called back to re-count as needed later in the day. Assignments will be issued before the inventory date. Although we strive to be as efficient and quick as possible with our counts, there is always the possibility that employees need to stay late in order to complete the inventory. Since the inventory is conducted in the warehouse, blue jeans, closed-toed shoes (tennis shoes are okay) and warm clothing are highly recommended!&rdquo;</font></p><p class="MsoNormal">&nbsp;</p><div style="text-align: center"><img src="/newsfolder/news622/inventory.jpg" border="0" alt="inventory.jpg" title="inventory.jpg" width="333" height="278" /></div><p>&nbsp;</p>  </p></div>
+
+                        </li>
+                                        <li>                        <h3><span class="title_date">Dec 14, 2009 9:53 am</span><a href="#">Christmas Christmas</a></h3>
+                        <div class="hidden_article"><p>Christmas is coming. Not only is the traffic in the malls and on the streets proving this fact: Santa is on his way. The ladies in the Wald building decorated a nice Christmas tree. Feel free to put some gifts under the tree ;-)<div style="text-align: center"><img src="/newsfolder/news621/christmas.jpg" border="0" alt="christmas.jpg" title="christmas.jpg" width="300" height="400" /></div></p></div>
+                        </li>
+                                        <li>                        <h3><span class="title_date">Dec 11, 2009 10:20 am</span><a href="#">New Faces/New Jobs</a></h3>
+
+                        <div class="hidden_article"><p><p align="justify">December has brought changes and newcomers to the Fulham family.&nbsp; Under the direction of Dhalia Jennings in the Customer Service Department, a new section has been created:&nbsp; Inside Sales.&nbsp; Two new employees and two Fulham veterans compose the group, who have begun their intensive training and are looking forward to making a big impact on our sales for 2010.&nbsp; </p><div style="text-align: center"><img src="/newsfolder/news620/carlos%20lemus.jpg" border="0" alt="carlos lemus.jpg" title="carlos lemus.jpg" width="300" height="253" /></div><p align="justify">Carlos Lemus comes to us with a background in inside sales and sales support on a national level at Herbalife and Score ASC here in Southern California. &nbsp; </p><div style="text-align: center"><img src="/newsfolder/news620/jay%20rohnke.jpg" border="0" alt="jay rohnke.jpg" title="jay rohnke.jpg" width="280" height="251" /></div><p align="justify">Jay Rhonke is a former Marine with over 5 years of sales experience as a National Account Manager at COMCASH and as Inside Sales/Customer Service rep at Bristolite.&nbsp; </p><p align="justify">Rounding out our Inside Sales team are Nancy Park and Qucio Piernas.&nbsp; Nancy and Q are excited to expand their careers with this new opportunity at Fulham.&nbsp; Of course, in order to move Nancy and Q into their new positions, we had to bring in some new blood for the front desk and Q&#39;s former post as Warranty Administrator.</p><div style="text-align: center"><img src="/newsfolder/news620/johnny%20imperialr.jpg" border="0" alt="johnny imperialr.jpg" title="johnny imperialr.jpg" width="334" height="250" /></div><p align="justify">Although he may not have his own comic book or action figure yet, Johnny Imperial brings his action hero name and superpowers in Warranty Administration to Fulham&#39;s Customer Service Department.&nbsp; Johnny has over 15 years experience as a Warranty department manager, Claims Administrator, and Service Manager in the air conditioning, major appliance, and consumer electronics industry.</p><div style="text-align: center"><img src="/newsfolder/news620/tonya%20torres.jpg" border="0" alt="tonya torres.jpg" title="tonya torres.jpg" width="345" height="251" /></div><p align="justify">Taking over from Nancy at the front desk to handle phones, reception and administrative assistant functions is Tonya Torres.&nbsp; Tonya comes to Fulham with an upbeat attitude and 6 years of clerical, administrative, and customer service experience. </p><p align="justify">Welcome everyone!&nbsp; </p></p></div>
+
+                        </li>
+                                        <li>                        <h3><span class="title_date">Dec 10, 2009 2:15 pm</span><a href="#">Communication Seminar is online available now</a></h3>
+                        <div class="hidden_article"><p><p>The communication Seminar Part one Power Point Presentation is now available for downloading. Please check it out here: <a href="/public/Seminars/Comm%20Seminar.ppt" target="_blank">http://216.75.32.162:8080/public/Seminars/Comm Seminar.ppt</a></p><p align="center">The next Seminar will be held at next Wednesday at 2pm in the Fulham conference room. Please confirm your attendance to H/R.</p><p align="center"> <img src="/newsfolder/news619/communication.jpg" border="0" alt="communication.jpg" title="communication.jpg" width="377" height="142" /></p></p></div>
+                        </li>
+                                        <li>                        <h3><span class="title_date">Dec 7, 2009 12:22 pm</span><a href="#">QC dept.</a></h3>
+
+                        <div class="hidden_article"><p>As part of a general re-organization of QC for both companies, Mel Sanchez is no longer part of the Wald or Fulham teams.&nbsp; Until the area is re-organized, please contact Julian regarding any current QC questions on product inspections or product status for Fulham, and please contact Brig Valdez regarding the same for Wald/Pro Products.&nbsp; We wish Mel the best in all his future endeavors.&nbsp; </p></div>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="more"><a href="homepage_all_news_html">More&hellip;</a></div>
+
+        </div>
+                    </div>
+            <div class="column3">
+
+
+    
+  
+ 
+ 
+
+
+
+<a style="padding: 0px 0px 0px 30px;background: white url({{STATIC_URL}}images/graph_icon.png) no-repeat left center; font-weight: bold; text-align: center; display:block;text-decoration: none; color: #70716C; margin-bottom: 10px; font-size:1.2em;" href="/orgboard/presentation/update_STATISTIC_daily_html?ORG_LAYER=1&CONTACT_ID=224&ORG_TABLE=1&date-calendar=2010/01/18&EASY=0">Enter your daily statistics</a>
+
+
+ 
+        <div class="box-style5 stock-ticker">
+            <h2>Extensions</h2>
+
+            <div class="content">
+                <p><label for="id_ext_filter" id="id_ext_filter_label" style="color:lightgrey;font-family:arial;font-weight:bold;margin-left:5px;margin-top:4px;position:absolute;text-transform:uppercase;" >filter</label><input type="text" id="id_ext_filter"></p>
+<script>
+$('#id_ext_filter').focus(function(){
+  $('#id_ext_filter_label').hide();
+});
+
+$('#id_ext_filter').blur(function(){
+  if (! $('#id_ext_filter').val() ){
+    $('#id_ext_filter_label').show();
+  }
+});
+</script>
+<div id="ext_list">
+<ul class="extension_list">
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=179&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1221 Reception</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=59&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1223 Adam </a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=33&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1234 Alvaro</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=19&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1216 Andres </a></li>
+
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=66&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1205 Angelita</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=273&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1227 Araceli</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=210&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1251 Aylin </a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=30&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1250 Bimal </a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=30&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1272 Bob A. Hm</a> </li>
+<li><a href="#">1222 Brian</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=224&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1208 Brice IT</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=168&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1261 Brig</a></li>
+
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=144&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1403 Bryce-Retro</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=172&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1276 Cindy</a></li>
+<li><a href="#">1404 Cody-Retro</a></li>
+<li><a href="#">1230 Conf. Wald</a></li>
+<li><a href="#">1300 Conf. Flhm</a></li>
+<li><a href="#">1402 Conf. Retro</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=27&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1226 Connie </a></li>
+<li><a href="#">1202 Courseroom</a></li>
+<li><a href="#">1204 CS Lighting</a></li>
+
+<li><a href="#">9000 CS Flhm</a></li>
+<li><a href="#">9001 CS ProProd</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=133&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1297Crystal</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=217&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1215 David IT </a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=23&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1239 Deborah </a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=26&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1235 Dhalia</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=34&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1209 Edwin </a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=271&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1291 Elmira </a></li>
+<li><a href="#">1294 Evin</a></li>
+
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=171&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1243 Fouad</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=166&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1249 Galen</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=60&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1268 Harry Ch</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=42&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1237 James </a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=22&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1242 Jessie</a> Main</li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=211&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1605 Jessie Fin</a> </li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=4&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1241 Jim Davis </a></li>
+
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=88&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1255 Jim Obbink</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=146&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1214 Joe Park</a> </li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=82&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1201 John </a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=276&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1219 Johnny Imp. </a></li>
+<li><a href="#">1263 Jose</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=3&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=3">1225 Joseph</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=121&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=121">1274 Julian-QC</a></li>
+<li><a href="#">1267 Kevin</a></li>
+
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=10&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1240 Laura </a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=14&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1253 Letty </a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=57&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1274 Luis D </a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=91&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1231 Mark Mika</a> </li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=98&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1217 Matt </a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=3&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=121">1233 Mike H </a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=215&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1258 Nancy Park </a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=68&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1218 Pamela</a> </li>
+
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=24&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1122 Peter</a> </li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=28&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1"> 1252 Qucio</a> </li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=84&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1265 Ray </a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=37&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1244 Richard</a> </li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=219&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1264 Sheri</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=174&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1256 Sophea</a></li>
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=35&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1229 Tom </a></li>
+
+<li><a href="/orgboard/presentation/person_html?CONTACT_ID=96&amp;ORG_LAYER=1&amp;LAYER=1&amp;ORG_TABLE=1">1257 Tracy </a></li>
+<li><a href="#">1245 WH1</a></li>
+<li><a href="#">1277 WH2</a></li>
+<li><a href="#">1288 WH3</a></li>
+<li><a href="#">2701 Voicemail</a></li>
+</div>
+            </div>
+        </div>
+
+        <div class="box-style3">
+
+            <div class="title">
+                <h2>Additional information</h2>
+            </div>
+            <div class="content">
+                <p><a href="halloween.htm"><img src="/6%20alex.jpg" alt="" width="80" height="88" class="border" /></a></p>
+                <h3>Halloween</h3>
+                <p>Discover 2009 Halloween pictures and contest result <a href="halloween.htm">here</a>.</p>
+
+                <p><a href="earthquake.pdf"><img src="earthquake.jpg" alt="" width="100" height="76" class="border" /></a></p>
+                <h3>Earthquakes</h3>
+                <p><a href="earthquake.pdf">Here</a> is an pdf file which will tell you more about this natural phenomenon.</p>
+                <p><a href="http://www.ul.com/"><img src="/UL.jpg" alt="" width="86" height="95" class="border" /></a></p>
+                <h3>Underwriters Laboratory</h3>
+                <p>Learn more about this resource for product safety certification and compliance solutions <a href="http://www.ul.com/">here</a>.</p>
+
+                                <h3>Powered by esto.ware</h3>
+                                <p><a href="http://www.esto-ware.com"><img src="estoware%20minilogo.jpg" width="100" height="36"></a></p>
+            </div>
+        </div>
+    </div>
+
+    <div style="clear: both;">&nbsp;</div>
+</div>
+<div id="footer">
+    <div class="container">
+
+        <p class="legal">Copyright (c) 2009 esto-ware.com. All rights reserved.</p>
+        <p class="links"><a href="#">Advertising Information</a> | <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a> | <a href="#">Contact Us</a></p>
+    </div>
+
+</div>
+</body>
+</html>
