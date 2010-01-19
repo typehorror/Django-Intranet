@@ -1,0 +1,8 @@
+This package is a base configuration for profile management. A profile in django allow you
+to extend the data model and functionnality linked to a user.
+
+Author:
+ - Brice LEROY <bbrriiccee@gmail.com>
+
+Dependancies:
+ - common (git://github.com/debrice/common.git)

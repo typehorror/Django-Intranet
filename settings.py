@@ -86,5 +86,6 @@ INSTALLED_APPS = (
     'attachments',
     'article',
     'profile',
+    'company',
 )
 
