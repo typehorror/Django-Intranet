@@ -16,6 +16,7 @@ span.cke_skin_kama
 	border-radius: 5px;
 	border: 1px solid #D3D3D3;
 	padding: 5px;
+    margin-left: 8em;
 }
 
 .cke_skin_kama span.cke_browser_webkit,
@@ -58,7 +59,7 @@ span.cke_skin_kama
 	border: solid 1px #dcdcdc;
 */
 	display: inline-table;
-	width: 100%;
+	width: 99%;
 }
 
 .cke_skin_kama .ltr .cke_browser_ie iframe

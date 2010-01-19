@@ -85,5 +85,6 @@ INSTALLED_APPS = (
     'django_extensions',
     'attachments',
     'article',
+    'profile',
 )
 
