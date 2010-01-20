@@ -4,6 +4,8 @@ from django.conf.urls.defaults import *
 from django.contrib import admin
 admin.autodiscover()
 
+from profile.forms import PasswordResetForm
+
 urlpatterns = patterns('',
     # Example:
     (r'^attachments/', include('attachments.urls')),

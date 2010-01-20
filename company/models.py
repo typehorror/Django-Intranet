@@ -18,10 +18,10 @@ You should have received a copy of the GNU General Public License
 along with Intranet.  If not, see <http://www.gnu.org/licenses/>.
 """
 from django.db import models
-from common.geo import STATE_CHOICES, COUNTRY_CHOICES
+from common.geos import STATE_CHOICES, COUNTRY_CHOICES
 
 class Company(models.Model):
-    title = models.CharField(max_lenght=255)
+    title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     logo = models.FileField(upload_to='company_logo')
 
@@ -39,3 +39,9 @@ class Company(models.Model):
 
     creation_date = models.DateTimeField(auto_now_add=True)
     modification_date = models.DateTimeField(auto_now=True, auto_now_add=True)
+    
+    is_active = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = 'companies'
+

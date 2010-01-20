@@ -20,9 +20,9 @@ along with Profile.  If not, see <http://www.gnu.org/licenses/>.
 from django.utils.translation import ugettext as _
 
 from django.db import models
+from django.contrib.auth.models import User
 
 from common.geos import COUNTRY_CHOICES, STATE_CHOICES
-from common.tools import get_uuid
 
 SEX_CHOICES = (
     ('male', _('Male')),
@@ -35,7 +35,7 @@ class Profile(models.Model):
     to extend the data model and functionality.
     """
     # User link (one to one relation)
-    user = models.ForeignKey(User, related_name='profile', unique=True)
+    user = models.ForeignKey(User, related_name='profile', unique=True, editable=False)
     company = models.ForeignKey('company.Company', related_name='company', unique=True)
     sex = models.CharField(_('Gender'), max_length=6, choices=SEX_CHOICES, blank=True)
     birth_date = models.DateField(blank=True, null=True, help_text=_("format: yyyy-mm-dd"))

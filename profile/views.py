@@ -38,9 +38,9 @@ else:
 
 from profile.settings import DEFAULT_EMAIL_FROM
 
-from profile.forms import LoginForm, RegisterForm, ProfileForm, UserForm, SetPasswordForm
+from profile.forms import LoginForm, ProfileForm, UserForm, SetPasswordForm
 from common.shortcuts import render_response, render_string
-from profile.models import Profile, Registration
+from profile.models import Profile
     
 def login_view(request, template_name='login.html', redirect_field_name=REDIRECT_FIELD_NAME):
     """

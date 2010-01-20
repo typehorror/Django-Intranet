@@ -32,7 +32,7 @@ from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
 
 from common.shortcuts import render_string
-from profile.models import Profile, Registration
+from profile.models import Profile
 
 # favour django-mailer but fall back to django.core.mail
 if "mailer" in settings.INSTALLED_APPS:
@@ -43,6 +43,9 @@ else:
 from profile.settings import DEFAULT_EMAIL_FROM
 
 class UserForm(forms.ModelForm):
+    """
+    This form allow the user to change his first and last name
+    """
     class Meta:
         model = User
         fields = ('first_name', 'last_name')
